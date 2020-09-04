@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 
-import { AuthenticationService, VaultService } from '@app/services';
+import {
+  AuthenticationService,
+  VaultService,
+  AnalyticsService,
+} from '@app/services';
 import { AuthMode, VaultErrorCodes } from '@ionic-enterprise/identity-vault';
+import { Plugins } from '@capacitor/core';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +17,12 @@ export class LoginPage {
   errorMessage: string;
 
   loginType: string;
+  instanceId: string;
 
   constructor(
     private authentication: AuthenticationService,
     private vaultService: VaultService,
+    private analytics: AnalyticsService,
   ) {}
 
   ionViewWillEnter() {
@@ -24,6 +31,8 @@ export class LoginPage {
     } catch (e) {
       console.error('Unable to check token status', e);
     }
+    this.analytics.trackScreen('loginPage');
+    this.analytics.getFirebaseId().then(id => (this.instanceId = id));
   }
 
   async unlockClicked() {
@@ -35,18 +44,22 @@ export class LoginPage {
   }
 
   async signInClicked() {
+    this.analytics.logEvent('login_attempt');
     try {
       await this.authentication.login();
       this.errorMessage = '';
+      this.analytics.logEvent('login_success');
     } catch (e) {
       this.errorMessage = e.message || 'Unknown login error';
       console.error(e);
+      this.analytics.logEvent('login_failure');
     }
   }
 
   private async tryUnlock() {
     try {
       await this.vaultService.unlock();
+      this.analytics.logEvent('vault_unlock_success');
     } catch (error) {
       if (this.notFailedOrCancelled(error)) {
         throw error;
@@ -55,6 +68,7 @@ export class LoginPage {
         alert('Unable to unlock the token');
         this.setUnlockType();
       }
+      this.analytics.logEvent('vault_unlock_failure');
     }
   }
 

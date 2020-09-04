@@ -6,6 +6,7 @@ import { Subject, Observable } from 'rxjs';
 import { cordovaAzureConfig, webAzureConfig } from '@env/environment';
 import { VaultService } from '../vault/vault.service';
 import { User } from '@app/models';
+import { AnalyticsService } from '../analytics/firebase-analytics.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,11 @@ export class AuthenticationService extends IonicAuth {
   }
 
   // @ts-ignore
-  constructor(vaultService: VaultService, platform: Platform) {
+  constructor(
+    vaultService: VaultService,
+    platform: Platform,
+    private analytics: AnalyticsService,
+  ) {
     const isCordovaApp = platform.is('cordova');
     const config = isCordovaApp ? cordovaAzureConfig : webAzureConfig;
     config.tokenStorageProvider = vaultService;
@@ -73,6 +78,8 @@ export class AuthenticationService extends IonicAuth {
     if (idToken.emails instanceof Array) {
       email = idToken.emails[0];
     }
+
+    this.analytics.setUserId(idToken.sub);
 
     return {
       id: idToken.sub,

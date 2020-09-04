@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 
 import { Platform, NavController } from '@ionic/angular';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
-import { AuthenticationService } from './services';
+import { AuthenticationService, AnalyticsService } from './services';
+
+// Must import the package once to make sure the web support initializes
+import '@capacitor-community/firebase-analytics';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +16,7 @@ export class AppComponent {
     private auth: AuthenticationService,
     private navController: NavController,
     private platform: Platform,
+    private analytics: AnalyticsService,
   ) {
     this.initializeApp();
     this.auth.changed.subscribe(authenticated =>
@@ -22,6 +26,7 @@ export class AppComponent {
 
   async initializeApp() {
     const { SplashScreen, StatusBar } = Plugins;
+    this.analytics.init();
     if (this.platform.is('hybrid')) {
       await SplashScreen.hide();
       await StatusBar.setStyle({ style: StatusBarStyle.Light });

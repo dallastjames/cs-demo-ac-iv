@@ -9,7 +9,7 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
-
+    implementation project(':capacitor-community-firebase-analytics')
     implementation "androidx.browser:browser:1.2.0"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:3.10.0"
 }

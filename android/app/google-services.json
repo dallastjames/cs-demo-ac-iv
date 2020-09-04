@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "459338429404",
+    "firebase_url": "https://cs-demo-ac-iv-analytics.firebaseio.com",
+    "project_id": "cs-demo-ac-iv-analytics",
+    "storage_bucket": "cs-demo-ac-iv-analytics.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459338429404:android:88987aec14ac607a095519",
+        "android_client_info": {
+          "package_name": "io.ionic.csacivdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459338429404-bnf43mfrs7rksj38blghp5mp1fdhbcvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.csacivdemo",
+            "certificate_hash": "93792b4d49700b5600dda25cd050bbc10d754015"
+          }
+        },
+        {
+          "client_id": "459338429404-ona8m1drvs2fatsvkg9co05toolg6uo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq-YrwLR2Azryyc_aWlGhLk19z1OpKHpg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459338429404-ona8m1drvs2fatsvkg9co05toolg6uo0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
